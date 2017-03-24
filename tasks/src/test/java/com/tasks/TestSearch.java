@@ -30,4 +30,5 @@ public class TestSearch {
         int args[] = {1, 3, 6, 8, 9, 2, 4, 7, 1, 3, 6, 8, 9, 90};
         assertArrayEquals(new Integer[]{3, 6, 9, 3, 6, 9, 90}, search.divIntoThree(args));
     }
+
 }
