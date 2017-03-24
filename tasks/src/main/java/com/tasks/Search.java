@@ -1,5 +1,8 @@
 package com.tasks;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Search {
 
     public int[] getTwoMin(int[] args) {
@@ -31,6 +34,16 @@ public class Search {
             }
         }
         return maxs;
+    }
+
+    public Integer[] divIntoThree(int[] args) {
+        List<Integer> res = new ArrayList<>();
+        for (int arg : args) {
+            if (arg % 3 == 0) {
+                res.add(arg);
+            }
+        }
+        return res.toArray(new Integer[res.size()]);
     }
 
 }
