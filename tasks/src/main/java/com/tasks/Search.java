@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Search {
 
-    public int[] getTwoMin(int[] args) {
+    public static int[] getTwoMin(int[] args) {
         int[] mins = (args[0] < args[1] ?
                 new int[]{args[0], args[1]} : new int[]{args[1], args[0]});
         for (int i = 2; i < args.length; i++) {
@@ -21,7 +21,7 @@ public class Search {
     }
 
 
-    public int[] getTwoMax(int[] args) {
+    public static int[] getTwoMax(int[] args) {
         int[] maxs = (args[0] < args[1] ?
                 new int[]{args[0], args[1]} : new int[]{args[1], args[0]});
         for (int i = 2; i < args.length; i++) {
@@ -36,7 +36,7 @@ public class Search {
         return maxs;
     }
 
-    public Integer[] divIntoThree(int[] args) {
+    public static Integer[] divIntoThree(int[] args) {
         List<Integer> res = new ArrayList<>();
         for (int arg : args) {
             if (arg % 3 == 0) {
