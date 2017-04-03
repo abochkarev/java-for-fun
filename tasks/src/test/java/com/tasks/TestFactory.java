@@ -10,7 +10,7 @@ import static org.junit.Assert.assertEquals;
 
 public class TestFactory {
     @Test
-    public void test() {
+    public void test() throws Exception {
         Map<String, CycleFactory> expected = new HashMap<String, CycleFactory>(3) {{
             put("Unicycle", new UnicycleFactory());
             put("Bicycle", new BicycleFactory());

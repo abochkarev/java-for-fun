@@ -8,7 +8,7 @@ import static org.junit.Assert.assertEquals;
 public class TestCalc {
 
     @Test
-    public void testFactorial() {
+    public void testFactorial() throws Exception {
         assertEquals(120, factorial(5));
     }
 

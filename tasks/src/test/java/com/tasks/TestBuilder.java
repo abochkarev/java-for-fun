@@ -7,7 +7,7 @@ import static org.junit.Assert.assertEquals;
 public class TestBuilder {
 
     @Test
-    public void test() {
+    public void test() throws Exception {
         String name = "John";
         String patronymicName = "Johnovich";
         String surname = "Johnov";

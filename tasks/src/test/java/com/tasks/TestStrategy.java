@@ -11,7 +11,7 @@ import static org.junit.Assert.assertEquals;
 public class TestStrategy {
 
     @Test
-    public void test() {
+    public void test() throws Exception {
         String input = "HeLlO!";
         Map<String, Processor> inputMap = new HashMap<String, Processor>() {{
             put("HELLO!", new UpperPrinter(input));
