@@ -12,6 +12,7 @@
         <javax.servlet>3.0.1</javax.servlet>
         <jetty.version>9.4.3.v20170317</jetty.version>
         <spring.cloud.version>1.2.0.RELEASE</spring.cloud.version>
+        <mockito.version>1.9.5</mockito.version>
     </properties>
 
     <dependencies>
@@ -45,6 +46,11 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-aws-core</artifactId>
             <version>${spring.cloud.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-all</artifactId>
+            <version>${mockito.version}</version>
         </dependency>
     </dependencies>
 
