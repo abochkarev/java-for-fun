@@ -4,9 +4,14 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
-interface A {}
-interface B {}
-interface C {}
+interface A {
+}
+
+interface B {
+}
+
+interface C {
+}
 
 class Candy implements Cloneable {
     static {
@@ -16,13 +21,16 @@ class Candy implements Cloneable {
     Candy() {
         System.out.println("Creating Candy");
     }
-    Candy(int i) {}
+
+    Candy(int i) {
+    }
 }
 
 class Gum extends Candy implements A, B, C {
     static {
         System.out.println("Loading Gum");
     }
+
     Gum(int i) {
         //super(i);
     }
@@ -37,6 +45,7 @@ class Cookie {
 class Initable {
     static final int staticFinal = 47;
     static final int staticFinal2 = RTTI.rand.nextInt(1000);
+
     static {
         System.out.println("Initializing Initable");
     }
@@ -45,6 +54,7 @@ class Initable {
 
 class Initable2 {
     static int staticNonFinal = 147;
+
     static {
         System.out.println("Initializing Initable2");
     }
@@ -53,6 +63,7 @@ class Initable2 {
 
 class Initable3 {
     static int staticNonFinal = 74;
+
     static {
         System.out.println("Initializing Initable3");
     }
@@ -96,7 +107,7 @@ public class RTTI {
         } catch (InstantiationException ie) {
             System.out.println("Cannot instantiate");
             System.exit(1);
-        } catch(IllegalAccessException ie) {
+        } catch (IllegalAccessException ie) {
             System.out.println("Cannot access");
             System.exit(1);
 

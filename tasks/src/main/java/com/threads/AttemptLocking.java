@@ -3,12 +3,28 @@ package com.threads;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.ReentrantLock;
 
-/**
- * Created by abochkarev on 14.04.17.
- */
 public class AttemptLocking {
 
     private ReentrantLock lock = new ReentrantLock();
+
+    public static void main(String[] args) {
+        final AttemptLocking al = new AttemptLocking();
+        al.untimed();
+        al.timed();
+        new Thread() {
+            {
+                setDaemon(true);
+            }
+
+            public void run() {
+                al.lock.lock();
+                System.out.println("acquired");
+            }
+        }.start();
+        Thread.yield();
+        al.untimed();
+        al.timed();
+    }
 
     public void untimed() {
         boolean captured = lock.tryLock();
@@ -37,24 +53,6 @@ public class AttemptLocking {
                 lock.unlock();
             }
         }
-    }
-
-    public static void main(String []args) {
-        final AttemptLocking al = new AttemptLocking();
-        al.untimed();
-        al.timed();
-        new Thread() {
-            {
-                setDaemon(true);
-            }
-            public void run() {
-                al.lock.lock();
-                System.out.println("acquired");
-            }
-        }.start();
-        Thread.yield();
-        al.untimed();
-        al.timed();
     }
 
 }

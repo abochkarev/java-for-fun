@@ -3,14 +3,8 @@ package com.threads;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class ExceptionThread implements Runnable{
-    @Override
-    public void run() {
-        throw new RuntimeException();
-    }
-
-
-    public static void main(String []args) {
+public class ExceptionThread implements Runnable {
+    public static void main(String[] args) {
         ExecutorService exec = Executors.newCachedThreadPool();
         try {
             exec.execute(new ExceptionThread());
@@ -18,5 +12,10 @@ public class ExceptionThread implements Runnable{
             System.out.println("Exception has been handled!");
         }
         exec.shutdown();
+    }
+
+    @Override
+    public void run() {
+        throw new RuntimeException();
     }
 }

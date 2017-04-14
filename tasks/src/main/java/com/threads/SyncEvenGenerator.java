@@ -1,8 +1,12 @@
 package com.threads;
 
 
-public class SyncEvenGenerator extends IntGenerator{
+public class SyncEvenGenerator extends IntGenerator {
     private int currentEvenValue = 0;
+
+    public static void main(String[] args) {
+        EvenChecker.test(new SyncEvenGenerator());
+    }
 
     @Override
     synchronized int nextInt() {
@@ -11,9 +15,5 @@ public class SyncEvenGenerator extends IntGenerator{
         Thread.yield();
         ++currentEvenValue;
         return currentEvenValue;
-    }
-
-    public static void main(String []args) {
-        EvenChecker.test(new SyncEvenGenerator());
     }
 }

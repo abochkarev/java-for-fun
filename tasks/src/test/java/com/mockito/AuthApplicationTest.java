@@ -112,6 +112,6 @@ public class AuthApplicationTest {
         stack.add(0L);
 
         verify(stack).add(captor.capture());
-        assertEquals((Long)0L, captor.getValue());
+        assertEquals((Long) 0L, captor.getValue());
     }
 }

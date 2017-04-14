@@ -1,12 +1,13 @@
 package com.threads;
 
 
-class LiftOff implements Runnable{
-    protected int countDown = 10;
+class LiftOff implements Runnable {
     private static int taskCount = 0;
     private final int id = taskCount++;
+    protected int countDown = 10;
 
-    public LiftOff(){}
+    public LiftOff() {
+    }
 
     public LiftOff(int countDown) {
         this.countDown = countDown;
@@ -18,7 +19,7 @@ class LiftOff implements Runnable{
 
     @Override
     public void run() {
-        while (countDown-- > 0){
+        while (countDown-- > 0) {
             System.out.println(status());
             Thread.yield();
         }
@@ -27,7 +28,7 @@ class LiftOff implements Runnable{
 }
 
 public class MainThread {
-    public static void main(String []args) {
+    public static void main(String[] args) {
         for (int i = 0; i < 5; i++) {
             new Thread(new LiftOff()).start();
         }

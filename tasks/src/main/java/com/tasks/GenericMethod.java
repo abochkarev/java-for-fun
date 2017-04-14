@@ -4,7 +4,7 @@ import java.util.*;
 
 public class GenericMethod {
 
-    public static <K,V> Map<K,V> map() {
+    public static <K, V> Map<K, V> map() {
         return new HashMap<>();
     }
 

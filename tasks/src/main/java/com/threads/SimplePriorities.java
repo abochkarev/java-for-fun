@@ -5,12 +5,21 @@ import java.util.concurrent.Executors;
 
 public class SimplePriorities implements Runnable {
 
+    private final int priority;
     private int countDown = 5;
     private volatile double d;
-    private final int priority;
 
     public SimplePriorities(int priority) {
         this.priority = priority;
+    }
+
+    public static void main(String[] args) {
+        ExecutorService e = Executors.newCachedThreadPool();
+        for (int i = 0; i < 5; i++) {
+            e.execute(new SimplePriorities(Thread.MIN_PRIORITY));
+        }
+        e.execute(new SimplePriorities(Thread.MAX_PRIORITY));
+        e.shutdown();
     }
 
     @Override
@@ -34,14 +43,5 @@ public class SimplePriorities implements Runnable {
                 return;
             }
         }
-    }
-
-    public static void main(String []args) {
-        ExecutorService e = Executors.newCachedThreadPool();
-        for (int i = 0; i < 5; i++) {
-            e.execute(new SimplePriorities(Thread.MIN_PRIORITY));
-        }
-        e.execute(new SimplePriorities(Thread.MAX_PRIORITY));
-        e.shutdown();
     }
 }

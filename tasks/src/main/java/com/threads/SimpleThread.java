@@ -10,10 +10,15 @@ public class SimpleThread extends Thread {
         start();
     }
 
+    public static void main(String[] args) {
+        for (int i = 0; i < 5; i++) {
+            new SimpleThread();
+        }
+    }
+
     public String toString() {
         return String.format("# %s + (%s)", getName(), countDown);
     }
-
 
     @Override
     public void run() {
@@ -22,11 +27,5 @@ public class SimpleThread extends Thread {
             Thread.yield();
         }
 
-    }
-
-    public static void main(String[] args) {
-        for (int i = 0; i < 5; i++) {
-            new SimpleThread();
-        }
     }
 }

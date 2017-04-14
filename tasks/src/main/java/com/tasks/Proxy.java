@@ -2,6 +2,7 @@ package com.tasks;
 
 interface Interface {
     void doSomething();
+
     void doSomethingElse(String arg);
 }
 
@@ -38,6 +39,7 @@ class SimpleProxy implements Interface {
 
     }
 }
+
 public class Proxy {
 
     public static void consumer(Interface i) {
@@ -45,7 +47,7 @@ public class Proxy {
         i.doSomethingElse("foo/bar");
     }
 
-    public static void main(String []args) {
+    public static void main(String[] args) {
         consumer(new RealObject());
         consumer(new SimpleProxy(new RealObject()));
     }

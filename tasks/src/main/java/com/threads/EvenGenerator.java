@@ -27,17 +27,6 @@ class EvenChecker implements Runnable {
         this.id = id;
     }
 
-    @Override
-    public void run() {
-        while (!intGenerator.isCancelled()) {
-            int val = intGenerator.nextInt();
-            if (val % 2 != 0) {
-                System.out.println("Thread id = "  + id + ", " + val + " not even!");
-                intGenerator.cancel();
-            }
-        }
-    }
-
     public static void test(IntGenerator ig, int count) {
         ExecutorService exec = Executors.newCachedThreadPool();
         for (int i = 0; i < count; i++) {
@@ -49,12 +38,27 @@ class EvenChecker implements Runnable {
     public static void test(IntGenerator ig) {
         test(ig, 10);
     }
+
+    @Override
+    public void run() {
+        while (!intGenerator.isCancelled()) {
+            int val = intGenerator.nextInt();
+            if (val % 2 != 0) {
+                System.out.println("Thread id = " + id + ", " + val + " not even!");
+                intGenerator.cancel();
+            }
+        }
+    }
 }
 
 
 public class EvenGenerator extends IntGenerator {
 
     private int currentEvenValue = 0;
+
+    public static void main(String[] args) {
+        EvenChecker.test(new EvenGenerator());
+    }
 
     @Override
     int nextInt() {
@@ -63,11 +67,6 @@ public class EvenGenerator extends IntGenerator {
         Thread.yield();
         ++currentEvenValue;
         return currentEvenValue;
-    }
-
-
-    public static void main(String []args) {
-        EvenChecker.test(new EvenGenerator());
     }
 
 }

@@ -33,7 +33,7 @@ class TupleTwo<A, B> extends TupleOne<A> {
 
 public class Tuple {
 
-    public static void main(String []args) {
+    public static void main(String[] args) {
         TupleOne<Integer> t1 = new TupleOne<>(1);
         TupleTwo<Integer, String> t2 = new TupleTwo<>(1, "a");
         System.out.println(t1);

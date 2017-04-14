@@ -11,34 +11,125 @@ import java.util.Stack;
 
 public class AWSAdminApp {
 
+    public static final String POLICY_DOCUMENT =
+            "{" +
+                    "  \"Version\": \"2012-10-17\"," +
+                    "  \"Statement\": [" +
+                    "    {" +
+                    "        \"Effect\": \"Allow\"," +
+                    "        \"Action\": \"logs:CreateLogGroup\"," +
+                    "        \"Resource\": \"*\"" +
+                    "    }," +
+                    "    {" +
+                    "        \"Effect\": \"Allow\"," +
+                    "        \"Action\": [" +
+                    "            \"dynamodb:DeleteItem\"," +
+                    "            \"dynamodb:GetItem\"," +
+                    "            \"dynamodb:PutItem\"," +
+                    "            \"dynamodb:Scan\"," +
+                    "            \"dynamodb:UpdateItem\"" +
+                    "       ]," +
+                    "       \"Resource\": \"*\"" +
+                    "    }" +
+                    "   ]" +
+                    "}";
     static AmazonIdentityManagement iam = AmazonIdentityManagementClientBuilder
             .standard()
             .withRegion(Regions.US_WEST_2)
             .build();
 
-    public static final String POLICY_DOCUMENT =
-            "{" +
-            "  \"Version\": \"2012-10-17\"," +
-            "  \"Statement\": [" +
-            "    {" +
-            "        \"Effect\": \"Allow\"," +
-            "        \"Action\": \"logs:CreateLogGroup\"," +
-            "        \"Resource\": \"*\"" +
-            "    }," +
-            "    {" +
-            "        \"Effect\": \"Allow\"," +
-            "        \"Action\": [" +
-            "            \"dynamodb:DeleteItem\"," +
-            "            \"dynamodb:GetItem\"," +
-            "            \"dynamodb:PutItem\"," +
-            "            \"dynamodb:Scan\"," +
-            "            \"dynamodb:UpdateItem\"" +
-            "       ]," +
-            "       \"Resource\": \"*\"" +
-            "    }" +
-            "   ]" +
-            "}";
+    public static void main(String[] args) throws Exception {
+        AWSUserManager awsUserManager = new AWSUserManager();
+        AWSGroupManager awsGroupManager = new AWSGroupManager();
+        AWSPolicyManager awsPolicyManager = new AWSPolicyManager();
+        ResourcesManager resourcesManager = new ResourcesManager();
+        String userName = "Bob";
+        String groupName = "Group";
+        String policyName = "Policy";
+        String policyDocument = POLICY_DOCUMENT;
 
+        try {
+            resourcesManager.addResource(new Resource() {
+
+                User user;
+
+                @Override
+                public void create() {
+                    System.out.println("Create user " + userName);
+                    user = awsUserManager.createUser(userName);
+                }
+
+                @Override
+                public void delete() {
+                    System.out.println("Delete user " + userName);
+                    awsUserManager.deleteUser(user.getUserName());
+                }
+            });
+
+
+            resourcesManager.addResource(new Resource() {
+
+                Group group;
+
+                @Override
+                public void create() {
+                    System.out.println("Create group " + groupName);
+                    group = awsGroupManager.createGroup(groupName);
+                }
+
+                @Override
+                public void delete() {
+                    System.out.println("Delete group " + groupName);
+                    awsGroupManager.deleteGroup(group.getGroupName());
+                }
+            });
+
+            resourcesManager.addResource(new Resource() {
+
+                private Policy policy;
+
+                @Override
+                public void create() {
+                    System.out.println("Create policy " + policyName);
+                    policy = awsPolicyManager.createPolicy(policyName, policyDocument);
+                }
+
+                @Override
+                public void delete() {
+                    System.out.println("Delete policy " + policyName);
+                    awsPolicyManager.deletePolicy(policy.getArn());
+                }
+            });
+
+            resourcesManager.addResource(new Resource() {
+                @Override
+                public void create() {
+                    System.out.println("Add user " + userName + " to group " + groupName);
+                    awsUserManager.addUserToGroup(userName, groupName);
+                }
+
+                @Override
+                public void delete() {
+                    System.out.println("Remove user " + userName + " from group " + groupName);
+                    awsUserManager.removeUserFromGroup(userName, groupName);
+                }
+            });
+        } catch (AmazonServiceException ase) {
+            System.out.println("Error Message:    " + ase.getMessage());
+            System.out.println("HTTP Status Code: " + ase.getStatusCode());
+            System.out.println("AWS Error Code:   " + ase.getErrorCode());
+            System.out.println("Error Type:       " + ase.getErrorType());
+            System.out.println("Request ID:       " + ase.getRequestId());
+        } finally {
+            resourcesManager.releaseResources();
+        }
+    }
+
+    interface Resource {
+        void create();
+
+        void delete();
+    }
 
     static class AWSUserManager {
 
@@ -142,12 +233,6 @@ public class AWSAdminApp {
 
     }
 
-    interface Resource {
-        void create();
-
-        void delete();
-    }
-
     static class ResourcesManager {
 
         Stack<Resource> resources = new Stack<>();
@@ -163,93 +248,6 @@ public class AWSAdminApp {
                 Resource resource = resources.pop();
                 resource.delete();
             }
-        }
-    }
-
-    public static void main(String[] args) throws Exception {
-        AWSUserManager awsUserManager = new AWSUserManager();
-        AWSGroupManager awsGroupManager = new AWSGroupManager();
-        AWSPolicyManager awsPolicyManager = new AWSPolicyManager();
-        ResourcesManager resourcesManager = new ResourcesManager();
-        String userName = "Bob";
-        String groupName = "Group";
-        String policyName = "Policy";
-        String policyDocument = POLICY_DOCUMENT;
-
-        try {
-            resourcesManager.addResource(new Resource() {
-
-                User user;
-
-                @Override
-                public void create() {
-                    System.out.println("Create user " + userName);
-                    user = awsUserManager.createUser(userName);
-                }
-
-                @Override
-                public void delete() {
-                    System.out.println("Delete user " + userName);
-                    awsUserManager.deleteUser(user.getUserName());
-                }
-            });
-
-
-            resourcesManager.addResource(new Resource() {
-
-                Group group;
-
-                @Override
-                public void create() {
-                    System.out.println("Create group " + groupName);
-                    group = awsGroupManager.createGroup(groupName);
-                }
-
-                @Override
-                public void delete() {
-                    System.out.println("Delete group " + groupName);
-                    awsGroupManager.deleteGroup(group.getGroupName());
-                }
-            });
-
-            resourcesManager.addResource(new Resource() {
-
-                private Policy policy;
-
-                @Override
-                public void create() {
-                    System.out.println("Create policy " + policyName);
-                    policy = awsPolicyManager.createPolicy(policyName, policyDocument);
-                }
-
-                @Override
-                public void delete() {
-                    System.out.println("Delete policy " + policyName);
-                    awsPolicyManager.deletePolicy(policy.getArn());
-                }
-            });
-
-            resourcesManager.addResource(new Resource() {
-                @Override
-                public void create() {
-                    System.out.println("Add user " + userName + " to group " + groupName);
-                    awsUserManager.addUserToGroup(userName, groupName);
-                }
-
-                @Override
-                public void delete() {
-                    System.out.println("Remove user " + userName + " from group " + groupName);
-                    awsUserManager.removeUserFromGroup(userName, groupName);
-                }
-            });
-        } catch (AmazonServiceException ase) {
-            System.out.println("Error Message:    " + ase.getMessage());
-            System.out.println("HTTP Status Code: " + ase.getStatusCode());
-            System.out.println("AWS Error Code:   " + ase.getErrorCode());
-            System.out.println("Error Type:       " + ase.getErrorType());
-            System.out.println("Request ID:       " + ase.getRequestId());
-        } finally {
-            resourcesManager.releaseResources();
         }
     }
 }

@@ -5,7 +5,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 public class FailFast {
 
-    public static void main(String []args) {
+    public static void main(String[] args) {
         List<String> strings = new ArrayList<>(Arrays.asList("Hello ", "World "));
         Iterator<String> iterator = strings.iterator();
         strings.add("!");

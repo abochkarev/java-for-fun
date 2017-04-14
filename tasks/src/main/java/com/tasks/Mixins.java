@@ -6,6 +6,14 @@ interface Base {
     String get();
 }
 
+interface TimeStamp {
+    long getTimeStamp();
+}
+
+interface SerialVersion {
+    long getSerialVersion();
+}
+
 class BaseImpl implements Base {
 
     private final String s;
@@ -18,10 +26,6 @@ class BaseImpl implements Base {
     public String get() {
         return s;
     }
-}
-
-interface TimeStamp {
-    long getTimeStamp();
 }
 
 class TimeStampImpl implements TimeStamp {
@@ -38,10 +42,6 @@ class TimeStampImpl implements TimeStamp {
     }
 }
 
-interface SerialVersion {
-    long getSerialVersion();
-}
-
 class SerialVersionImpl implements SerialVersion {
     private static long version = 1;
     private final long serialVersion = version++;
@@ -56,6 +56,15 @@ public class Mixins implements Base, TimeStamp, SerialVersion {
     Base base = new BaseImpl("Some string");
     TimeStamp timeStamp = new TimeStampImpl();
     SerialVersion serialVersion = new SerialVersionImpl();
+
+    public static void main(String[] args) {
+        Mixins mix1 = new Mixins();
+        System.out.println(mix1);
+        Mixins mix2 = new Mixins();
+        System.out.println(mix2);
+        Mixins mix3 = new Mixins();
+        System.out.println(mix3);
+    }
 
     @Override
     public String get() {
@@ -79,14 +88,5 @@ public class Mixins implements Base, TimeStamp, SerialVersion {
                 ", timeStamp=" + timeStamp.getTimeStamp() +
                 ", serialVersion=" + serialVersion.getSerialVersion() +
                 '}';
-    }
-
-    public static void main(String[] args) {
-        Mixins mix1 = new Mixins();
-        System.out.println(mix1);
-        Mixins mix2 = new Mixins();
-        System.out.println(mix2);
-        Mixins mix3 = new Mixins();
-        System.out.println(mix3);
     }
 }

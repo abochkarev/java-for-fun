@@ -25,18 +25,6 @@ enum ExtEnum {
 }
 
 
-interface Food {
-
-    enum Beverage implements Food {
-        COFEE, TEA, MILK
-    }
-
-    enum Dessert implements Food {
-        TIRAMISU, FRUIT, ICE_CREAM
-    }
-
-}
-
 enum HeroStates {
     HALK(States.HALK_STATES.class), TOR(States.TOR_STATES.class), FLASH(States.FLASH_STATES.class);
 
@@ -59,6 +47,18 @@ enum HeroStates {
             RUN
         }
     }
+}
+
+interface Food {
+
+    enum Beverage implements Food {
+        COFEE, TEA, MILK
+    }
+
+    enum Dessert implements Food {
+        TIRAMISU, FRUIT, ICE_CREAM
+    }
+
 }
 
 public class EnumClass {

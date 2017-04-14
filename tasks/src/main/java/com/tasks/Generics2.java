@@ -7,16 +7,16 @@ class Generator<T> {
         this.type = type;
     }
 
+    protected static <T> T create(Class<T> t) {
+        return new Generator<>(t).generate();
+    }
+
     protected T generate() {
         try {
             return type.newInstance();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-    }
-
-    protected static <T> T create(Class<T> t) {
-        return new Generator<>(t).generate();
     }
 }
 
@@ -26,6 +26,11 @@ class NumbGenerator<T extends Number> extends Generator<T> {
         super(type);
     }
 
+    @SuppressWarnings("unchecked")
+    protected static <T> T create(Class<T> t) {
+        return (T) new NumbGenerator(t).generate();
+    }
+
     @Override
     protected T generate() {
         try {
@@ -33,11 +38,6 @@ class NumbGenerator<T extends Number> extends Generator<T> {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-    }
-
-    @SuppressWarnings("unchecked")
-    protected static <T> T create(Class<T> t) {
-        return (T) new NumbGenerator(t).generate();
     }
 }
 

@@ -33,7 +33,7 @@ class Joiner extends Thread {
 
     @Override
     public void run() {
-        try{
+        try {
             sleeper.join();
         } catch (InterruptedException e) {
             System.out.println("Interrupted");

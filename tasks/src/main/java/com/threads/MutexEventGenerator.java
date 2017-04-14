@@ -8,6 +8,10 @@ public class MutexEventGenerator extends IntGenerator {
     private int currentEventValue = 0;
     private Lock lock = new ReentrantLock();
 
+    public static void main(String[] args) {
+        EvenChecker.test(new MutexEventGenerator());
+    }
+
     @Override
     int nextInt() {
         lock.lock();
@@ -19,9 +23,5 @@ public class MutexEventGenerator extends IntGenerator {
         } finally {
             lock.unlock();
         }
-    }
-
-    public static void main(String[] args) {
-        EvenChecker.test(new MutexEventGenerator());
     }
 }

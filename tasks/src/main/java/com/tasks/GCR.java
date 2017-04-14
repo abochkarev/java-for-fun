@@ -48,7 +48,7 @@ class FilledList<T> {
 // Generic class references
 public class GCR {
 
-    public static void main(String []args) {
+    public static void main(String[] args) {
         FilledList<CountedInteger> fl = new FilledList<>(CountedInteger.class);
         System.out.print(fl.create(10));
 

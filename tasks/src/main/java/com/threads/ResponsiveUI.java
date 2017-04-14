@@ -20,18 +20,18 @@ public class ResponsiveUI extends Thread {
         start();
     }
 
-    @Override
-    public void run() {
-        while (true) {
-            d = d + (Math.PI + Math.E) / d;
-        }
-    }
-
     public static void main(String[] args) throws Exception {
         //new UnresponsiveUI();
         new ResponsiveUI();
         System.in.read();
         System.out.println(d);
+    }
+
+    @Override
+    public void run() {
+        while (true) {
+            d = d + (Math.PI + Math.E) / d;
+        }
     }
 
 }

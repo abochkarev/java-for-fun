@@ -2,7 +2,7 @@ package com.tasks;
 
 import java.util.List;
 
-import static java.util.Collections.*;
+import static java.util.Collections.singletonList;
 
 class Holder<T> {
     T o1, o2, o3;
@@ -49,9 +49,9 @@ class Holder<T> {
 
 public class Generics {
 
-    public static void main(String []args) {
-        Holder<String> stringHolder = new Holder<>("a","b","c");
-        Holder<Integer> integerHolder = new Holder<>(1,2,3);
+    public static void main(String[] args) {
+        Holder<String> stringHolder = new Holder<>("a", "b", "c");
+        Holder<Integer> integerHolder = new Holder<>(1, 2, 3);
         Holder<List> listHolder = new Holder<>(singletonList(1), singletonList(2), singletonList(3));
         System.out.println(stringHolder);
         System.out.println(integerHolder);
