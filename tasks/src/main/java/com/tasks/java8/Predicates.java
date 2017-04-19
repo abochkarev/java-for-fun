@@ -6,6 +6,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.function.Predicate;
 
+import static java.util.stream.Collectors.toList;
+
 public class Predicates {
 
     private static <T> List<T> filter(List<T> lst, Predicate<T> predicate) {
@@ -21,6 +23,7 @@ public class Predicates {
     public static void main(String[] args) {
         List<String> lst = Arrays.asList("1", "2", "33", "", null);
         System.out.println(filter(lst, (String s) -> !(s == null || s.isEmpty())));
+        System.out.println(lst.stream().filter(s -> !(s == null || s.isEmpty())).collect(toList()));
 
     }
 }
